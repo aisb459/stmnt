@@ -1,0 +1,63 @@
+parameters:
+
+  - name: application
+    displayName: Application Name
+    type: string
+    default: "hn-statements-api"
+
+  - name: failOnIssues
+    displayName: Stop deployment on any task's failure
+    type: boolean
+    default: true
+
+  - name: namespace
+    displayName: Namespace
+    type: string
+    default: "coreservices"
+
+  - name: usePublicHost
+    displayName: Deployment should use public host
+    type: boolean
+    default: true
+
+  - name: deploymentStream
+    displayName: deployment Stream - Stream02
+    type: string
+    values:
+      - 01
+      - 02
+
+resources:
+  pipelines:
+    - pipeline: CI
+      source: hn statements api CI
+      trigger: none
+        #  branches:
+        #    include:
+        # - develop
+        # - main
+        # - master
+        # - releases/*
+        # exclude:
+        # - feature*
+      # - user*
+
+  repositories:
+    - repository: sharedTemplates
+      type: github
+      endpoint: hn-gtsdevops
+      name: hn-gtsdevops/ado-pipeline
+      ref: feature/sonarGateEnable
+
+
+extends:
+  template: extension/deploy-artifact-aks.yaml@sharedTemplates
+  parameters:
+    application: ${{ parameters.application }}
+    failOnIssues:  ${{ parameters.failOnIssues }}
+    namespace: ${{ parameters.namespace }}
+    projectID: '$(resources.pipeline.CI.projectID)'
+    runID: '$(resources.pipeline.CI.runID)'
+    testMode: false
+    usePublicHost: false
+    deploymentStream: ${{ parameters.deploymentStream }}

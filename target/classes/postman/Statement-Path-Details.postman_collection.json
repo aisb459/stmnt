@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "0957b20e-ed27-40cd-ac52-8d32f3f89206",
+		"name": "Statement-Path-Details",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4957142"
+	},
+	"item": [
+		{
+			"name": "statement-path-details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"dsId\": \"100496617\",\r\n    \"orderStartDate\": \"2014-12-01\",\r\n    \"orderEndDate\": \"2016-12-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/hn-statements-api/v1/api/statement-path-details",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hn-statements-api",
+						"v1",
+						"api",
+						"statement-path-details"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

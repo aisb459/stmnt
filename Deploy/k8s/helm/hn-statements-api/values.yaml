@@ -1,0 +1,76 @@
+hn-api:
+  enabled: true
+  nameOverride: "hn-statements-api"
+  fullnameOverride: "hn-statements-api"  ##application name
+  productGroup: "coreservices" ##check on namespace with DevOps and update
+  versionOverride: ""
+
+  replicaCount: 1
+
+  image:
+    containerPort: 8080
+    probs:
+      livenessPath: ""
+      readinessPath: ""
+      startupPath: ""
+
+  imagePullSecrets: []
+
+  azureKeyVault:
+    spcName: "hn-one-azure-kv-msi"
+    secrets:
+      - name: STATEMENT_PATH_DB_PASSWORD
+        refKey: statement-path-db-password
+        refName: statement-path-db-password
+      - name: STATEMENT_PATH_FTP_PASSWORD
+        refKey: statement-path-ftp-password
+        refName: statement-path-ftp-password
+    
+
+  configMap:
+    name: "app-config"
+    envVars:
+      - name: STATEMENT_PATH_DB_URL
+        key: statement-path-db-url
+      - name: STATEMENT_PATH_DB_USERNAME
+        key: statement-path-db-username
+      - name: STATEMENT_PATH_FTP_USERNAME
+        key: statement-path-ftp-username
+      - name: STATEMENT_PATH_PORT
+        key: statement-path-port
+      - name: STATEMENT_PATH_HOST
+        key: statement-path-host
+      - name: STATEMENT_PATH_BASE_FILE_PATH
+        key: statement-path-base-file-path
+      - name: STATEMENT_PATH_EXTENSION_FILE_PATH1
+        key: statement-path-extension-file-path1
+      - name: STATEMENT_PATH_EXTENSION_FILE_PATH2
+        key: statement-path-extension-file-path2
+    
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    annotations: {}
+    tls: []
+    paths:
+      - "/hn-statements-api"
+
+  resources: {}
+    # limits:
+    #   cpu: 250m
+    #   memory: 1024Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  deployment:
+    env: ""

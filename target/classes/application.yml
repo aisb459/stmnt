@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: ${DB_HOST}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: oracle.jdbc.OracleDriver
+server:
+  servlet:
+    context-path: /hn-statements-api
+FTP_USER_NAME: ${FTP_USER_NAME}
+FTP_PORT: ${FTP_PORT}
+FTP_PASSWORD: ${FTP_PASSWORD}
+FTP_HOST: ${FTP_HOST}
+FTP_BASE_FILE_PATH: ${FTP_BASE_FILE_PATH}
+FTP_EXTENSION_FILE_PATH1: ${FTP_EXTENSION_FILE_PATH1}
+FTP_EXTENSION_FILE_PATH2: ${FTP_EXTENSION_FILE_PATH2}

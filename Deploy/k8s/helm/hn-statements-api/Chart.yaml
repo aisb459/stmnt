@@ -1,0 +1,17 @@
+apiVersion: v1
+appVersion: "#{ BuildVersion }#"
+description: A Helm chart for Kubernetes
+name: hn-statements-api
+version: "#{ BuildVersion }#"
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+
+
+dependencies:
+  - name: hn-api
+    version: 0.1.012
+    #repository: "file://../hn-api"
+    repository: "oci://zcusaks01acr.azurecr.io/helm/hn-one"

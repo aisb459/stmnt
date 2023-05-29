@@ -1,0 +1,54 @@
+parameters:
+  - name: Environment
+    displayName: Target environment
+    type: string
+    values:
+      - QA
+      - DEV
+    default: DEV
+
+
+resources:
+  repositories:
+    - repository: sharedTemplates
+      type: github
+      endpoint: hlone-api
+      name: hlone-api/sharedTemplates
+
+    - repository: CustomerIntegrationCoreApi
+      type: github
+      endpoint: hlone-api
+      name: hlone-api/CustomerIntegrationCoreApi
+
+
+
+
+stages:
+  - stage: ACR
+    variables:
+      - template: var/vars-${{ parameters.Environment }}.yaml@CustomerIntegrationCoreApi
+    displayName: build and push docker image
+    jobs:
+      - job:
+        pool:
+          name:  ${{ variables.poolname  }}
+          vmImage: ${{ variables.agentname }}
+        steps:
+          - checkout: self
+            fetchDepth: 1000
+            clean: true
+            displayName: check out code
+          - checkout: sharedTemplates
+            displayName: check out build template
+
+
+          - template: image-build.yaml@sharedTemplates
+            parameters:
+              application: ${{ variables.application  }}
+              repo: ${{ variables.repo  }}
+              SonarKey : ${{ variables.SonarKey  }}
+              SolutionFile : ${{ variables.SolutionFile  }}
+              ACRconnection : ${{ variables.ACRconnection  }}
+              dockerfile: ${{ variables.dockerfile  }}
+              testProject: ${{ variables.testProject  }}
+              ACR: ${{ variables.ACR  }}

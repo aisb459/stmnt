@@ -1,0 +1,26 @@
+resources:
+  repositories:
+  - repository: sharedTemplates 
+    type: github
+    endpoint: hn-gtsdevops
+    name: hn-gtsdevops/ado-pipeline
+    ref: feature/sonarGateEnable
+
+  
+  - repository: applicationCodeRepo
+    type: github
+    endpoint:  hn-coreservices
+    name: hn-coreservices/hn-statements-api
+    trigger:
+      branches:
+        include: 
+        - develop
+        - main
+#        - master
+#        - release*
+#        exclude:
+#        - feature*
+#        - user*
+
+extends:
+  template: extension/maven-build-and-push.yaml@sharedTemplates
